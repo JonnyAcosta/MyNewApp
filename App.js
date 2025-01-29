@@ -4,7 +4,7 @@ import { View, Text, Button, Image, Alert, StyleSheet } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello, my name is jonathan 🚀</Text>
+      <Text style={styles.text}>Hello, my name is Joshua 🚀</Text>
       
       {/* Button added here */}
       <Button 
