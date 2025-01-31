@@ -81,7 +81,7 @@ function ChallengeScreen({ navigation }) {
   const [quizFinished, setQuizFinished] = useState(false);
 
   useEffect(() => {
-    setQuestions([
+    const questionPool = [
       { text: "What is the output of console.log(2 + '2') in JavaScript?", options: ["22", "4", "NaN", "Error"], correct: "22" },
       { text: "Which of the following is a valid way to declare a function in Python?", options: ["def myFunction():", "function myFunction():", "func myFunction():", "declare myFunction():"], correct: "def myFunction():" },
       { text: "Which keyword is used to define a class in C#?", options: ["class", "Class", "define", "struct"], correct: "class" },
@@ -92,7 +92,10 @@ function ChallengeScreen({ navigation }) {
       { text: "How do you start a loop in Python?", options: ["for i = 0; i < 10; i++", "foreach i in range(10)", "for i in range(10)", "loop i 10"], correct: "for i in range(10)" },
       { text: "Which symbol is used for single-line comments in C#?", options: ["#", "//", "/*", "--"], correct: "//" },
       { text: "What is the default value of an uninitialized variable in C#?", options: ["null", "0", "undefined", "Depends on the type"], correct: "Depends on the type" }
-    ]);
+    ];
+
+    // Shuffle the questions and select the first 10
+    setQuestions(questionPool.sort(() => Math.random() - 0.5).slice(0, 10));
   }, []);
 
   const handleAnswerPress = (answer) => {
@@ -121,6 +124,7 @@ function ChallengeScreen({ navigation }) {
     setSelectedAnswer(null);
     setIsCorrect(null);
     setQuizFinished(false);
+    setQuestions(prevQuestions => prevQuestions.sort(() => Math.random() - 0.5)); // Shuffle again
   };
 
   const getGrade = () => {
@@ -131,6 +135,14 @@ function ChallengeScreen({ navigation }) {
     if (percentage >= 60) return "D (Needs Improvement.)";
     return "F (Try Again! 😢)";
   };
+
+  if (questions.length === 0) {
+    return (
+      <View style={stylesChallenge.container}>
+        <Text style={stylesChallenge.text}>Loading questions...</Text>
+      </View>
+    );
+  }
 
   if (quizFinished) {
     return (
@@ -187,7 +199,7 @@ function ChallengeScreen({ navigation }) {
   );
 }
 
-// Updated styles
+// Styles
 const stylesChallenge = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f5f5' },
   text: { fontSize: 20, marginBottom: 20, fontWeight: 'bold' },
