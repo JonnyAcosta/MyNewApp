@@ -52,11 +52,11 @@ function FlashcardsScreen(){
       </TouchableOpacity>
 
       <TouchableOpacity
-      style = {styles.card}
+      style ={styles.button}
       onPress = {() => {SetShowAnswer(false);
-        setIndex((prevIndex) => (revIndex + 1) % flashcards.length);
+        setIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
       }}>
-
+        <Text style={styles.buttonText}>Next Card</Text>
       </TouchableOpacity>
       
     </View>
@@ -96,6 +96,32 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight:'bold',
     marginBottom: 20,
+  },
+
+  card: {
+    width: 300,
+    height: 200,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.3,
+    elevation: 5,
+    padding: 20,
+    marginBottom: 20,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    alignItems:'center'
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
