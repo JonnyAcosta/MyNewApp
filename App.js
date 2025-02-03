@@ -3,8 +3,9 @@ import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity } from '
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
-
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createStackNavigator();
+// const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (

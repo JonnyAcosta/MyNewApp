@@ -30,31 +30,51 @@ export function LearningScreen() {
 
   const [currentPythonTip, setCurrentPythonTip] = useState(-1);
   const [currentJavaTip, setCurrentJavaTip] = useState(-1);
+  const [showPythonButton, setShowPythonButton] = useState(true);
+  const [showJavaButton, setShowJavaButton] = useState(true);
+  const [pythonButtonText, setPythonButtonText] = useState('Learn Python');
+  const [javaButtonText, setJavaButtonText] = useState('Learn Java');
 
   const showNextPythonTip = () => {
     setCurrentPythonTip((prevIndex) => (prevIndex + 1) % tips.length);
+    setShowJavaButton(false);
+    setPythonButtonText('Next');
   };
 
   const showNextJavaTip = () => {
     setCurrentJavaTip((prevIndex) => (prevIndex + 1) % javaTips.length);
+    setShowPythonButton(false);
+    setJavaButtonText('Next');
+  };
+
+  const resetTips = () => {
+    setCurrentPythonTip(-1);
+    setCurrentJavaTip(-1);
+    setShowPythonButton(true);
+    setShowJavaButton(true);
+    setPythonButtonText('Learn Python');
+    setJavaButtonText('Learn Java');
   };
 
   return (
     <View style={learningScreenStyles.container}>
+      {(currentPythonTip >= 0 || currentJavaTip >= 0) && (
+        <Button title="Back" onPress={resetTips} />
+      )}
       {currentPythonTip >= 0 && (
         <>
           <Text style={learningScreenStyles.topText}>Python Coding Function:</Text>
           <Text style={learningScreenStyles.tipText}>{tips[currentPythonTip]}</Text>
         </>
       )}
-      <Button title="Next Python Function" onPress={showNextPythonTip} />
+      {showPythonButton && <Button title={pythonButtonText} onPress={showNextPythonTip} />}
       {currentJavaTip >= 0 && (
         <>
           <Text style={learningScreenStyles.topText}>Java Coding Tip:</Text>
           <Text style={learningScreenStyles.tipText}>{javaTips[currentJavaTip]}</Text>
         </>
       )}
-      <Button title="Next Java Tip" onPress={showNextJavaTip} />
+      {showJavaButton && <Button title={javaButtonText} onPress={showNextJavaTip} />}
     </View>
   );
 }
@@ -68,7 +88,7 @@ const learningScreenStyles = StyleSheet.create({
     paddingTop: 50,
   },
   topText: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
   },
