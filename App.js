@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LearningScreen } from './LearningScreen';
-
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -64,57 +62,13 @@ function FlashcardsScreen(){
   );
 }
 
-
-function TriviaScreen() {
-  return (
-    <View style={trivia_styles.container}>
-      <Text style={trivia_styles.text}>This is the Trivia tab</Text>
+function LearningScreen(){
+  return(
+    <View style = {styles.container}>
+      <Text style = {styles.text}> This is the Learning tab</Text>
     </View>
   );
 }
-
-const trivia_styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-  },
-  text: {
-    fontSize: 20,
-    marginBottom: 20,
-    fontWeight: 'bold',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    marginBottom: 10,
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
-    marginBottom: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'blue',
-  },
-  extraText: {
-    fontSize: 16,
-    color: 'blue',
-    marginTop: 10,
-  },
-});
 
 
 // Challenge Screen (Multiple Choice Question)
@@ -245,7 +199,7 @@ function ChallengeScreen({ navigation }) {
   );
 }
 
-// Styles
+// Styles for Challenge Screen
 const stylesChallenge = StyleSheet.create({
   container: {
     flex: 1,
