@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
+<<<<<<< HEAD
 import {FlashcardsScreen} from './FlashcardsScreen';
 import { Ionicons } from '@expo/vector-icons';
+=======
+>>>>>>> db33bcd745d805ff64f9274c563f7312a6a9848e
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -24,31 +27,54 @@ export default function App() {
 
 function HomeScreen({navigation}){
   return(
-    <ImageBackground source={{uri:'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}}
-    style={styles.background}>
-    
-      <View style = {styles.overlay}>
+    <View style = {styles.container}>
       <Text style = {styles.title}>Welcome to the App</Text>
-
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Flashcards')}>
-        <Ionicons name="book-outline" size={24} color="white"/>
-        <Text style={styles.buttonText}>Flashcards</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Challenge')}>
-        <Ionicons name="game-controller-outline" size={24} color="white"/>
-        <Text style={styles.buttonText}>Challenge</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Learning')}>
-        <Ionicons name="school-outline" size={24} color="white"/>
-        <Text style={styles.buttonText}>Learning</Text>
-      </TouchableOpacity>
+      <Button title="Flashcards" onPress={() => navigation.navigate('Flashcards')} />
+      <Button title="Challenge" onPress={() => navigation.navigate('Challenge')} />
+      <Button title="Learning" onPress={() => navigation.navigate('Learning')} />
     </View>
-    </ImageBackground>
   );
 }
 
+<<<<<<< HEAD
+=======
+function FlashcardsScreen(){
+  const flashcards = [
+    {question: "What is Python", answer: "It is a programming language."},
+    {question: "what is the most common print statement", answer: "Hello, World"},
+    {question: "What is Visual Studios Code", answer: "It is a program to code"},
+  ];
+
+  const[index, setIndex] = useState(0);
+  const[showAnswer, SetShowAnswer] = useState(false);
+
+  return(
+    <View style = {styles.container}>
+      <Text style = {styles.text}> This is the Flashcards tab</Text>
+      <TouchableOpacity
+        style = {styles.card}
+        onPress = {() => SetShowAnswer(!showAnswer)}
+        > 
+        <Text style={styles.text}>
+          {showAnswer ? flashcards[index].answer : flashcards[index].question}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+      style ={styles.button}
+      onPress = {() => {SetShowAnswer(false);
+        setIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+      }}>
+        <Text style={styles.buttonText}>Next Card</Text>
+      </TouchableOpacity>
+      
+    </View>
+  );
+}
+
+
+// Challenge Screen (Multiple Choice Question)
+>>>>>>> db33bcd745d805ff64f9274c563f7312a6a9848e
 function ChallengeScreen({ navigation }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -300,23 +326,11 @@ const stylesChallenge = StyleSheet.create({
 
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
-  },
-  background: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    padding: 20,
-    borderRadius:15,
-    alignItems: 'center',
-    width: '85%',
   },
   text: {
     fontSize: 20,
@@ -325,9 +339,8 @@ const styles = StyleSheet.create({
   },
 
   title:{
-    fontSize: 28,
+    fontSize: 24,
     fontWeight:'bold',
-    color: 'white',
     marginBottom: 20,
   },
 
@@ -346,20 +359,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    flexDirection:"row",
-    // marginTop: 20,
+    marginTop: 20,
     backgroundColor: '#007BFF',
-    padding: 15,
-    borderRadius: 10,
-    width: '80%',
-    alignItems:'center',
-    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+    alignItems:'center'
   },
   buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-   // marginLeft: 8,
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
