@@ -51,14 +51,18 @@ function HomeScreen({navigation}){
 function FlashcardsScreen(){
   const flashcardsByCategory = {
     Python: [
-    {question: "What is Python", answer: "It is a programming language."},
-    {question: "what is the print statement in Python", answer: "print('Hello, World')"},
-    {question: "What is Visual Studios Code", answer: "It is a program to code"},
+    {question: "How do you declare a variable?", answer: "x = 10"},
+    {question: "what is the print output?", answer: "print('Hello, World')"},
+    {question: "How do you wirte an if statement?", answer: "if x > 5: print('x is greater')"},
+    {question: "How do you write a for loop?", answer: "for i in range(5): print(i)"},
+    {question: "How do you define a function?", answer: "def greet(name): return 'Hello' + name"},
   ],
   JavaScript: [
     {question: "What is Javascript", answer: "It is a programming language for websites."},
     {question: "Which keyword declares a variable?", answer: "'var', 'let', or 'const' "},
     {question: "How do you print something?", answer: "console.log('Hello')"},
+    {question: "How do you declare a variable?", answer: "let x = 10; or const x = 10;"},
+    {question: "How do you write an if statement?", answer: "if (x > 5) {console.log('x is greater')}"},
   ],
 
 };
