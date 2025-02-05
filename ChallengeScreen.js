@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function ChallengeScreen({ navigation }) {
@@ -71,10 +71,10 @@ export function ChallengeScreen({ navigation }) {
 
   const getGrade = () => {
     const percentage = (score / questions.length) * 100;
-    if (percentage >= 90) return "A (Excellent! 🎉)";
-    if (percentage >= 80) return "B (Great Job! 👍)";
-    if (percentage >= 70) return "C (Good Effort!)";
-    if (percentage >= 60) return "D (Needs Improvement.)";
+    if (percentage >= 90) return "A (Excellent! 💯)";
+    if (percentage >= 80) return "B (Great Job! 😃)";
+    if (percentage >= 70) return "C (Good Effort! 😃)";
+    if (percentage >= 60) return "D (Needs Improvement. 😐)";
     return "F (Try Again! 😢)";
   };
 
@@ -88,93 +88,108 @@ export function ChallengeScreen({ navigation }) {
 
   if (quizFinished) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Quiz Completed!</Text>
-        <Text style={styles.scoreText}>Your Score: {score} / {questions.length}</Text>
-        <Text style={styles.gradeText}>Grade: {getGrade()}</Text>
-        <TouchableOpacity style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
-          <Text style={styles.homeButtonText}>🏠 Return to Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.restartButton} onPress={restartQuiz}>
-          <Text style={styles.restartButtonText}>🔄 Restart Quiz</Text>
-        </TouchableOpacity>
-      </View>
+      <ImageBackground
+        source={{ uri: 'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}
+        style={styles.background}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.text}>Quiz Completed!</Text>
+          <Text style={styles.scoreText}>Your Score: {score} / {questions.length}</Text>
+          <Text style={styles.gradeText}>Grade: {getGrade()}</Text>
+          <TouchableOpacity style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
+            <Text style={styles.homeButtonText}>🏠 Return to Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.restartButton} onPress={restartQuiz}>
+            <Text style={styles.restartButtonText}>🔄 Restart Quiz</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Challenge</Text>
-      <Text style={styles.scoreText}>Score: {score} / {questions.length}</Text>
-      <Text style={styles.question}>{questions[currentQuestionIndex].text}</Text>
+    <ImageBackground
+      source={{ uri: 'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}
+      style={styles.background}
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.text}>Challenge</Text>
+        <Text style={styles.scoreText}>Score: {score} / {questions.length}</Text>
+        <Text style={styles.question}>{questions[currentQuestionIndex].text}</Text>
 
-      {questions[currentQuestionIndex].options.map((option, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[
-            styles.option,
-            selectedAnswer === option
-              ? isCorrect
-                ? styles.correct
-                : styles.incorrect
-              : styles.defaultOption,
-          ]}
-          onPress={() => handleAnswerPress(option)}
-          disabled={selectedAnswer !== null}
-        >
-          <Text style={styles.optionText}>{option}</Text>
-        </TouchableOpacity>
-      ))}
+        {questions[currentQuestionIndex].options.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.option,
+              selectedAnswer === option
+                ? isCorrect
+                  ? styles.correct
+                  : styles.incorrect
+                : styles.defaultOption,
+            ]}
+            onPress={() => handleAnswerPress(option)}
+            disabled={selectedAnswer !== null}
+          >
+            <Text style={styles.optionText}>{option}</Text>
+          </TouchableOpacity>
+        ))}
 
-      {selectedAnswer && (
-        <Text style={isCorrect ? styles.correctText : styles.incorrectText}>
-          {isCorrect ? "Correct! 🎉" : "Wrong! ❌"}
-        </Text>
-      )}
+        {selectedAnswer && (
+          <Text style={isCorrect ? styles.correctText : styles.incorrectText}>
+            {isCorrect ? "Correct! 🎉" : "Wrong! ❌"}
+          </Text>
+        )}
 
-      {selectedAnswer && (
-        <TouchableOpacity style={styles.nextButton} onPress={goToNextQuestion}>
-          <Text style={styles.nextButtonText}>Next Question ➡️</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+        {selectedAnswer && (
+          <TouchableOpacity style={styles.nextButton} onPress={goToNextQuestion}>
+            <Text style={styles.nextButtonText}>Next Question ➡️</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 
 // Styles for Challenge Screen
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
-    padding: 10,
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    width: '85%',
   },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
     textAlign: 'center',
-    color: '#333',
+    color: '#fff',
   },
   scoreText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#007BFF',
+    color: '#87CEEB',
   },
   gradeText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,
-    color: '#007BFF',
+    color: '#87CEEB',
   },
   question: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
-    color: '#444',
+    color: '#fff',
   },
   option: {
     width: '85%',
