@@ -30,7 +30,7 @@ export function ChallengeMenuScreen({ navigation }) {
 
       <Text style={styles.subtitle}>Previous Scores:</Text>
       {previousScores.map((score, index) => (
-        <Text key={index} style={styles.scoreText}>Challenge {index + 1}: {score}%</Text>
+        <Text key={index} style={styles.scoreText}>Challenge {index + 1}: {score}/10</Text>
       ))}
     </View>
   );
