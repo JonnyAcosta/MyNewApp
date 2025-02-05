@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
+import { Ionicons } from '@expo/vector-icons';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -22,28 +23,79 @@ export default function App() {
 
 function HomeScreen({navigation}){
   return(
-    <View style = {styles.container}>
+    <ImageBackground source={{uri:'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'}}
+    style={styles.background}>
+    
+      <View style = {styles.overlay}>
       <Text style = {styles.title}>Welcome to the App</Text>
-      <Button title="Flashcards" onPress={() => navigation.navigate('Flashcards')} />
-      <Button title="Challenge" onPress={() => navigation.navigate('Challenge')} />
-      <Button title="Learning" onPress={() => navigation.navigate('Learning')} />
+
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Flashcards')}>
+        <Ionicons name="book-outline" size={24} color="white"/>
+        <Text style={styles.buttonText}>Flashcards</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Challenge')}>
+        <Ionicons name="game-controller-outline" size={24} color="white"/>
+        <Text style={styles.buttonText}>Challenge</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Learning')}>
+        <Ionicons name="school-outline" size={24} color="white"/>
+        <Text style={styles.buttonText}>Learning</Text>
+      </TouchableOpacity>
     </View>
+    </ImageBackground>
   );
 }
 
 function FlashcardsScreen(){
-  const flashcards = [
+  const flashcardsByCategory = {
+    Python: [
     {question: "What is Python", answer: "It is a programming language."},
-    {question: "what is the most common print statement", answer: "Hello, World"},
+    {question: "what is the print statement in Python", answer: "print('Hello, World')"},
     {question: "What is Visual Studios Code", answer: "It is a program to code"},
-  ];
+  ],
+  JavaScript: [
+    {question: "What is Javascript", answer: "It is a programming language for websites."},
+    {question: "Which keyword declares a variable?", answer: "'var', 'let', or 'const' "},
+    {question: "How do you print something?", answer: "console.log('Hello')"},
+  ],
 
+};
+
+
+  const categories = Object.keys(flashcardsByCategory);
+  const[selectedCategory, setSelectedCategory] = useState(null);
+  const[flashcards, setFlashcards] = useState([]);
   const[index, setIndex] = useState(0);
   const[showAnswer, SetShowAnswer] = useState(false);
 
+  const selectCategory = (category) => {
+    setSelectedCategory(category);
+    setFlashcards(flashcardsByCategory[category]);
+    setIndex(0);
+    SetShowAnswer(false);
+  };
+
   return(
     <View style = {styles.container}>
-      <Text style = {styles.text}> This is the Flashcards tab</Text>
+      <Text style = {styles.text}>Flashcards</Text>
+      {!selectedCategory ?(
+      <View>
+        <Text style={styles.text}>Select a Category:</Text>
+        {categories.map((category) =>(
+          <TouchableOpacity
+          key={category}
+          style={styles.button}
+          onPress={()=> selectCategory(category)}
+          >
+            <Text style={styles.buttonText}>{category}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      ) : (
+      <View>
+      <Text style={styles.text}>{selectedCategory}Flashcards</Text>
       <TouchableOpacity
         style = {styles.card}
         onPress = {() => SetShowAnswer(!showAnswer)}
@@ -60,7 +112,12 @@ function FlashcardsScreen(){
       }}>
         <Text style={styles.buttonText}>Next Card</Text>
       </TouchableOpacity>
-      
+
+      <TouchableOpacity style={styles.button} onPress={() => setSelectedCategory(null)}>
+        <Text style={styles.buttonText}>Back to Categories</Text>
+      </TouchableOpacity>
+      </View>
+      )}
     </View>
   );
 }
@@ -318,11 +375,23 @@ const stylesChallenge = StyleSheet.create({
 
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 20,
+    borderRadius:15,
+    alignItems: 'center',
+    width: '85%',
   },
   text: {
     fontSize: 20,
@@ -331,8 +400,9 @@ const styles = StyleSheet.create({
   },
 
   title:{
-    fontSize: 24,
+    fontSize: 28,
     fontWeight:'bold',
+    color: 'white',
     marginBottom: 20,
   },
 
@@ -351,15 +421,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    marginTop: 20,
+    flexDirection:"row",
+    // marginTop: 20,
     backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems:'center'
+    padding: 15,
+    borderRadius: 10,
+    width: '80%',
+    alignItems:'center',
+    marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+   // marginLeft: 8,
   },
 });
 
