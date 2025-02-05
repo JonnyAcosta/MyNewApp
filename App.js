@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
@@ -307,15 +307,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   text: {
-    fontSize: 20,
+    fontSize: 28,
+    fontWeight:'bold',
+    color: 'white',
     marginBottom: 20,
-    fontWeight: 'bold',
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 20,
+    borderRadius:15,
+    alignItems: 'center',
+    width: '85%',
   },
 
   title:{
     fontSize: 24,
     fontWeight:'bold',
     marginBottom: 20,
+    color: 'white',
   },
 
   card: {
@@ -333,15 +347,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    marginTop: 20,
+    flexDirection:"row",
+    // marginTop: 20,
     backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems:'center'
+    padding: 15,
+    borderRadius: 10,
+    width: '80%',
+    alignItems:'center',
+    marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+   // marginLeft: 8,
   },
 });
 
