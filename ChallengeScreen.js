@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function ChallengeScreen({ navigation }) {
   const [questions, setQuestions] = useState([]);
@@ -44,6 +45,18 @@ export function ChallengeScreen({ navigation }) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     } else {
       setQuizFinished(true);
+      saveScore();
+    }
+  };
+
+  const saveScore = async () => {
+    try {
+      const scores = await AsyncStorage.getItem('scores');
+      const scoresArray = scores ? JSON.parse(scores) : [];
+      scoresArray.push(score);
+      await AsyncStorage.setItem('scores', JSON.stringify(scoresArray));
+    } catch (error) {
+      console.error('Failed to save score', error);
     }
   };
 
