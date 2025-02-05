@@ -3,6 +3,7 @@ import { View, Text, Button, Image, Alert, StyleSheet, TouchableOpacity, ImageBa
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
+import {FlashcardsScreen} from './FlashcardsScreen';
 import { Ionicons } from '@expo/vector-icons';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createStackNavigator();
@@ -48,86 +49,6 @@ function HomeScreen({navigation}){
   );
 }
 
-function FlashcardsScreen(){
-  const flashcardsByCategory = {
-    Python: [
-    {question: "How do you declare a variable?", answer: "x = 10"},
-    {question: "what is the print output?", answer: "print('Hello, World')"},
-    {question: "How do you wirte an if statement?", answer: "if x > 5: print('x is greater')"},
-    {question: "How do you write a for loop?", answer: "for i in range(5): print(i)"},
-    {question: "How do you define a function?", answer: "def greet(name): return 'Hello' + name"},
-  ],
-  JavaScript: [
-    {question: "What is Javascript", answer: "It is a programming language for websites."},
-    {question: "Which keyword declares a variable?", answer: "'var', 'let', or 'const' "},
-    {question: "How do you print something?", answer: "console.log('Hello')"},
-    {question: "How do you declare a variable?", answer: "let x = 10; or const x = 10;"},
-    {question: "How do you write an if statement?", answer: "if (x > 5) {console.log('x is greater')}"},
-  ],
-
-};
-
-
-  const categories = Object.keys(flashcardsByCategory);
-  const[selectedCategory, setSelectedCategory] = useState(null);
-  const[flashcards, setFlashcards] = useState([]);
-  const[index, setIndex] = useState(0);
-  const[showAnswer, SetShowAnswer] = useState(false);
-
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-    setFlashcards(flashcardsByCategory[category]);
-    setIndex(0);
-    SetShowAnswer(false);
-  };
-
-  return(
-    <View style = {styles.container}>
-      <Text style = {styles.text}>Flashcards</Text>
-      {!selectedCategory ?(
-      <View>
-        <Text style={styles.text}>Select a Category:</Text>
-        {categories.map((category) =>(
-          <TouchableOpacity
-          key={category}
-          style={styles.button}
-          onPress={()=> selectCategory(category)}
-          >
-            <Text style={styles.buttonText}>{category}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      ) : (
-      <View>
-      <Text style={styles.text}>{selectedCategory}Flashcards</Text>
-      <TouchableOpacity
-        style = {styles.card}
-        onPress = {() => SetShowAnswer(!showAnswer)}
-        > 
-        <Text style={styles.text}>
-          {showAnswer ? flashcards[index].answer : flashcards[index].question}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-      style ={styles.button}
-      onPress = {() => {SetShowAnswer(false);
-        setIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-      }}>
-        <Text style={styles.buttonText}>Next Card</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => setSelectedCategory(null)}>
-        <Text style={styles.buttonText}>Back to Categories</Text>
-      </TouchableOpacity>
-      </View>
-      )}
-    </View>
-  );
-}
-
-
-// Challenge Screen (Multiple Choice Question)
 function ChallengeScreen({ navigation }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
