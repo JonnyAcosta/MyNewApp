@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+
+const robotImage = require('C:/Users/ethan/Downloads/AppliedProgrammingSprint1/CodeApp/MyNewApp/a cute little red robot without background.png');
 
 const pythonTips = [
   {
@@ -67,32 +69,82 @@ const cppTips = [
 
 export function LearningScreen() {
   const [currentTipIndex, setCurrentTipIndex] = useState(0);
-  const [lives, setLives] = useState(3);
   const [showGreenFlash, setShowGreenFlash] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showNextButton, setShowNextButton] = useState(false);
+  const [completedModules, setCompletedModules] = useState({
+    python: false,
+    java: false,
+    csharp: false,
+    cpp: false,
+  });
+  const [incorrectQuestions, setIncorrectQuestions] = useState({
+    python: [],
+    java: [],
+    csharp: [],
+    cpp: [],
+  });
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [initialTipsCount, setInitialTipsCount] = useState(0);
+
+  const resetAnswers = () => {
+    setSelectedOption(null);
+    setShowNextButton(false);
+  };
 
   const handleGuess = (option, tips) => {
     setSelectedOption(option);
     if (option === tips[currentTipIndex].answer) {
       setShowGreenFlash(true);
       setTimeout(() => setShowGreenFlash(false), 500);
-      setLives((prevLives) => prevLives + 1);
+      setCorrectAnswersCount((prevCount) => prevCount + 1);
     } else {
-      setLives((prevLives) => prevLives - 2);
+      setIncorrectQuestions((prevQuestions) => ({
+        ...prevQuestions,
+        [selectedLanguage]: [...prevQuestions[selectedLanguage], tips[currentTipIndex]],
+      }));
     }
     setShowNextButton(true);
   };
 
   const handleNextQuestion = (tips) => {
-    setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tips.length);
-    setSelectedOption(null);
-    setShowNextButton(false);
+    if (correctAnswersCount === initialTipsCount) {
+      setCompletedModules((prevModules) => ({
+        ...prevModules,
+        [selectedLanguage]: true,
+      }));
+      setSelectedLanguage(null);
+      setCurrentTipIndex(0);
+      setCorrectAnswersCount(0);
+      resetAnswers();
+    } else if (currentTipIndex + 1 === tips.length) {
+      setCurrentTipIndex(0);
+      resetAnswers();
+    } else {
+      setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tips.length);
+      resetAnswers();
+    }
+  };
+
+  const handleLanguageSelection = (language) => {
+    setSelectedLanguage(language);
+    setCurrentTipIndex(0);
+    resetAnswers();
+    setCorrectAnswersCount(0);
+    setInitialTipsCount(language === 'python' ? pythonTips.length :
+                        language === 'java' ? javaTips.length :
+                        language === 'csharp' ? csharpTips.length :
+                        cppTips.length);
+    setIncorrectQuestions((prevQuestions) => ({
+      ...prevQuestions,
+      [language]: [],
+    }));
   };
 
   const renderTip = (tips) => (
     <View>
+      <Image source={robotImage} style={styles.robotImage} />
       <Text style={styles.tipText}>{tips[currentTipIndex].tip}</Text>
       <View style={styles.codeBox}>
         <Text style={styles.codeText}>Complete the code: {tips[currentTipIndex].code.replace("___", "_____")}</Text>
@@ -104,6 +156,7 @@ export function LearningScreen() {
             styles.button,
             selectedOption === option && option === tips[currentTipIndex].answer && styles.correctButton,
             selectedOption === option && option !== tips[currentTipIndex].answer && styles.incorrectButton,
+            selectedOption !== null && option === tips[currentTipIndex].answer && styles.correctButton,
           ]}
           onPress={() => handleGuess(option, tips)}
           disabled={selectedOption !== null}
@@ -119,23 +172,47 @@ export function LearningScreen() {
     </View>
   );
 
-  const renderLanguageSelection = () => (
-    <View>
-      <Text style={styles.topText}>Select a Language</Text>
-      <TouchableOpacity style={styles.button} onPress={() => setSelectedLanguage('python')}>
-        <Text style={styles.buttonText}>Python</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => setSelectedLanguage('java')}>
-        <Text style={styles.buttonText}>Java</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => setSelectedLanguage('csharp')}>
-        <Text style={styles.buttonText}>C#</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => setSelectedLanguage('cpp')}>
-        <Text style={styles.buttonText}>C++</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  const renderLanguageSelection = () => {
+    const completedCount = Object.values(completedModules).filter(Boolean).length;
+    let status = 'Novice';
+    if (completedCount === 2 || completedCount === 3) {
+      status = 'Intermediate';
+    } else if (completedCount === 4) {
+      status = 'Master';
+    }
+
+    return (
+      <View>
+        <Image source={robotImage} style={styles.robotImage} />
+        <Text style={styles.topText}>Select a Language</Text>
+        <Text style={styles.topText}>{completedCount}/4 Modules Completed - {status}</Text>
+        <TouchableOpacity
+          style={[styles.button, completedModules.python && styles.completedButton]}
+          onPress={() => handleLanguageSelection('python')}
+        >
+          <Text style={styles.buttonText}>Python</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, completedModules.java && styles.completedButton]}
+          onPress={() => handleLanguageSelection('java')}
+        >
+          <Text style={styles.buttonText}>Java</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, completedModules.csharp && styles.completedButton]}
+          onPress={() => handleLanguageSelection('csharp')}
+        >
+          <Text style={styles.buttonText}>C#</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, completedModules.cpp && styles.completedButton]}
+          onPress={() => handleLanguageSelection('cpp')}
+        >
+          <Text style={styles.buttonText}>C++</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={[styles.container, showGreenFlash && styles.greenFlash]}>
@@ -144,12 +221,10 @@ export function LearningScreen() {
       ) : (
         <>
           <Text style={styles.topText}>Learning Tips</Text>
-          {selectedLanguage === 'python' && renderTip(pythonTips)}
-          {selectedLanguage === 'java' && renderTip(javaTips)}
-          {selectedLanguage === 'csharp' && renderTip(csharpTips)}
-          {selectedLanguage === 'cpp' && renderTip(cppTips)}
-          <Text style={styles.tipText}>Lives: {lives}</Text>
-          {lives <= 0 && <Text style={styles.tipText}>Game Over</Text>}
+          {selectedLanguage === 'python' && renderTip([...pythonTips, ...incorrectQuestions.python])}
+          {selectedLanguage === 'java' && renderTip([...javaTips, ...incorrectQuestions.java])}
+          {selectedLanguage === 'csharp' && renderTip([...csharpTips, ...incorrectQuestions.csharp])}
+          {selectedLanguage === 'cpp' && renderTip([...cppTips, ...incorrectQuestions.cpp])}
         </>
       )}
     </View>
@@ -161,7 +236,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#d3d3d3', // Changed background color to a slightly darker gray
     paddingTop: 50,
   },
   greenFlash: {
@@ -211,8 +286,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#ddd',
   },
+  completedButton: {
+    backgroundColor: 'green',
+  },
   buttonText: {
     fontSize: 16,
     color: 'black',
+  },
+  robotImage: {
+    width: 150, // Increased width
+    height: 150, // Increased height
+    marginBottom: 20,
+    alignSelf: 'center', // Center the image
   },
 });
