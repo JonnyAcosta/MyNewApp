@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const robotImage = require('C:/Users/ethan/Downloads/AppliedProgrammingSprint1/CodeApp/MyNewApp/a cute little red robot without background.png');
+const robotImage = require('./a cute little red robot without background.png');
 const backgroundImageUri = 'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 const pythonTips = [
