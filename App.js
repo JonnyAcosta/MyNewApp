@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LearningScreen } from './LearningScreen';
 import { FlashcardsScreen } from './FlashcardsScreen';
 import { ChallengeScreen } from './ChallengeScreen';
+import { ChallengeMenuScreen } from './ChallengeMenuScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Flashcards" component={FlashcardsScreen} />
         <Stack.Screen name="Learning" component={LearningScreen} />
+        <Stack.Screen name="ChallengeMenu" component={ChallengeMenuScreen} />
         <Stack.Screen name="Challenge" component={ChallengeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -36,7 +38,7 @@ function HomeScreen({ navigation }) {
           <Text style={styles.buttonText}>Flashcards</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Challenge')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ChallengeMenu')}>
           <Ionicons name="game-controller-outline" size={24} color="white" />
           <Text style={styles.buttonText}>Challenge</Text>
         </TouchableOpacity>

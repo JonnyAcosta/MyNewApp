@@ -10,7 +10,7 @@ export function FlashcardsScreen(){
     {question: "How do you write a for loop?", answer: "for i in range(5):\n print(i)"},
     {question: "How do you define a function?", answer: "def greet(name):\n return 'Hello' + name"},
     {question: "How do you create a list?", answer: "my_list = [1, 2, 3]"},
-    {question: "How do you create a dictionary?", answer: "my_dict = {}"},
+    {question: "How do you create a dictionary?", answer: "my_dict = {'name':'Jonathan', 'age': 23}"},
   ],
   JavaScript: [
     {question: "What is Javascript", answer: "It is a programming language for websites."},
@@ -19,6 +19,17 @@ export function FlashcardsScreen(){
     {question: "How do you declare a variable?", answer: "let x = 10; or const x = 10;"},
     {question: "How do you write an if statement?", answer: "if (x > 5){\n console.log('x is greater')}"},
     {question: "How do you define a function?", answer: "function greet(name){\n return 'Hello,' + name;}"},
+    {question: "How do you create an object?", answer: "let myObj = {name: 'Jonathan', age: 23};"},
+    {question: "How do you add a click event listener?", answer: "document.getElementById('myButton').addEventListener('click', function(){\n console.log('Button clicked');});"},
+
+  ],
+  Csharp: [
+    {question: "How do you declare a variable?", answer: "int x = 10;"},
+    {question: "How do you print something?", answer: "Console.WriteLine('Hello')"},
+    {question: "How do you write an if statement?", answer: "if (x > 5)\n{\n Console.WriteLine('X is greater');}"},
+    {question: "How do you loop 5 times?", answer: "for (int i = 0; i < 5; i++)\n{\n Console.WriteLine(i)}"},
+    {question: "How do you create a function?", answer: "void Greet()\n{\n Console.WriteLine('Hello');"},
+
   ],
 
 };
