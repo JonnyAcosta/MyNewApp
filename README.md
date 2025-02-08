@@ -11,13 +11,11 @@ Java- Programming language we used for the app design.
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * React Native- https://reactnative.dev/ 
 * Expo https://docs.expo.dev/ 
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
 * We can add more features in the add to give a variety of option for the app. 
 * We can improve on the style of the app by adding features that can make the app more interactive. 
 * We can add sounds and noises to the app to give the user a way to know the right or wrong answer with a ding.
