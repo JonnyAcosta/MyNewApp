@@ -31,7 +31,7 @@ function HomeScreen({ navigation }) {
       style={styles.background}
     >
       <View style={styles.overlay}>
-        <Text style={styles.title}>Welcome to the App</Text>
+        <Text style={styles.title}>CodeLingo</Text>
 
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Flashcards')}>
           <Ionicons name="book-outline" size={24} color="white" />
