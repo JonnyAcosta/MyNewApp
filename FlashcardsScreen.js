@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
 export function FlashcardsScreen(){
   const flashcardsByCategory = {
@@ -29,9 +29,22 @@ export function FlashcardsScreen(){
     {question: "How do you write an if statement?", answer: "if (x > 5)\n{\n Console.WriteLine('X is greater');}"},
     {question: "How do you loop 5 times?", answer: "for (int i = 0; i < 5; i++)\n{\n Console.WriteLine(i)}"},
     {question: "How do you create a function?", answer: "void Greet()\n{\n Console.WriteLine('Hello');"},
-
+    {question: " How do you make an array?", answer: "int[] numbers = {1, 2, 3};"},
+    {question: "How do you make a list?", answer: "List<int> myList = new List<int> {1, 2, 3};"},
+    {question: "How do you create a class and object?", answer: "class Person {\npublic string Name;\n Person p = new Person();\n p.Name = 'Alice';"},
+    
   ],
-
+  Java: [
+    {question: "How do you declare a variable?", answer: "int x = 10;"},
+    {question: "How do you print something?", answer: "System.out.println('Hello');"},
+    {question: "How do you write an if statement?", answer: "if (x > 5)\n{\n System.out.printIn('X is greater');}"},
+    {question: "How do you loop 5 times?", answer: "for (int i = 0; i < 5; i++)\n{\n System.out.printIn(i);}"},
+    {question: "How do you create a function?", answer: "void Greet()\n{\n System.out.printIn('Hello');"},
+    {question: " How do you make an array?", answer: "int[] numbers = {1, 2, 3};"},
+    {question: "How do you make a ArrayList?", answer: "ArrayList<int> myList = new ArrayList<int>();\n my.List.add(1);\n my.List.add(2);\n my.List.add(3);"},
+    {question: "How do you create a class and object?", answer: "class Person {\npublic String name;\n Person p = new Person();\n p.Name = 'Alice';"},
+    
+  ],
 };
 
 
@@ -49,6 +62,11 @@ export function FlashcardsScreen(){
   };
 
   return(
+    <ImageBackground
+          source={{ uri: 'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}
+          style={styles.background}
+        >
+    <View style={styles.overlay}>
     <View style = {styles.container}>
       <Text style = {styles.text}>Flashcards</Text>
       {!selectedCategory ?(
@@ -90,6 +108,8 @@ export function FlashcardsScreen(){
       </View>
       )}
     </View>
+    </View>
+    </ImageBackground>
   );
 }
 
@@ -98,7 +118,7 @@ const styles = StyleSheet.create({
        flex: 1,
        justifyContent: 'center',
        alignItems: 'center',
-       backgroundColor: '#f5f5f5',
+      backgroundColor: 'pink',
      },
      background: {
        flex: 1,
@@ -155,5 +175,11 @@ const styles = StyleSheet.create({
        fontWeight: 'bold',
       // marginLeft: 8,
      },
+     overlay: {
+      flex: 1,
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+   },
    });
    
