@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const robotImage = require('./a cute little red robot without background.png');
 const backgroundImageUri = 'https://images.unsplash.com/photo-1579547944212-c4f4961a8dd8?q=80&w=339&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
+// Array of all of tips in the 4 languages
 const pythonTips = [
   
   {
@@ -322,6 +323,7 @@ const cppTips = [
   }
 ];
 
+// Set the learning screen. It will also set the buttons that will be used to navigate forward and backward, and will mark if completed
 
 export function LearningScreen() {
   const [currentTipIndex, setCurrentTipIndex] = useState(0);
@@ -344,6 +346,8 @@ export function LearningScreen() {
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [initialTipsCount, setInitialTipsCount] = useState(0);
 
+
+// Define the state of all of the variables to save the data for the User
   useEffect(() => {
     const loadState = async () => {
       try {
@@ -401,11 +405,15 @@ export function LearningScreen() {
     initialTipsCount,
   ]);
 
+
+  // Resets answers when you leave and re enter a module
   const resetAnswers = () => {
     setSelectedOption(null);
     setShowNextButton(false);
   };
 
+// Makes it so that it displays the correct answer, and the screen flashes
+//  green when there is a correct answer, and navigates you to the next question
   const handleGuess = (option, tips) => {
     setSelectedOption(option);
     if (option === tips[currentTipIndex].answer) {
@@ -421,6 +429,8 @@ export function LearningScreen() {
     setShowNextButton(true);
   };
 
+
+// Navigates to the next question. If there is a wrong answer it will re add the questions to the end of the question list
   const handleNextQuestion = (tips) => {
     if (correctAnswersCount === initialTipsCount) {
       setCompletedModules((prevModules) => ({
@@ -439,6 +449,9 @@ export function LearningScreen() {
       resetAnswers();
     }
   };
+
+// Sets which language module you choose. It also shows how
+//  many question there are, so that when you have that many correct it sets them to correct
 
   const handleLanguageSelection = (language) => {
     setSelectedLanguage(language);
@@ -461,6 +474,8 @@ export function LearningScreen() {
     resetAnswers();
     setCorrectAnswersCount(0);
   };
+
+// This sets the styles and the image of a robot
 
   const renderTip = (tips) => (
     <View>
@@ -491,6 +506,8 @@ export function LearningScreen() {
       )}
     </View>
   );
+
+// Sets the skill level of the user
 
   const renderLanguageSelection = () => {
     const completedCount = Object.values(completedModules).filter(Boolean).length;
@@ -555,6 +572,8 @@ export function LearningScreen() {
     </ImageBackground>
   );
 }
+
+// Styles and background set 
 
 const styles = StyleSheet.create({
   background: {
